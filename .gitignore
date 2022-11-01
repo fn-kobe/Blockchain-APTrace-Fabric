@@ -1,0 +1,11 @@
+# Project exclude paths
+/blockchain-trace-basic-data/ruoyi-admin/target/
+/blockchain-trace-basic-data/ruoyi-common/target/
+/blockchain-trace-basic-data/ruoyi-framework/target/
+/blockchain-trace-basic-data/ruoyi-generator/target/
+/blockchain-trace-basic-data/ruoyi-quartz/target/
+/blockchain-trace-basic-data/ruoyi-system/target/
+/blockchain-trace-basic-data/ruoyi-traces/target/
+/blockchain-trace-bcnetwork/webapp/node_modules/
+/blockchain-trace-pc/dist/
+/blockchain-trace-pc/node_modules/
