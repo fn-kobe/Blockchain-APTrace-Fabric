@@ -1,25 +1,26 @@
 <template>
 	<div class="app-container">
-		<el-divider>待通知事项</el-divider>
+
+		<el-divider>通知事项</el-divider>
 
 		<br />
 		<el-table :data="transportList">
 			<el-table-column type="selection" width="55" align="center" />
 			<el-table-column label="需求编号" prop="cropsId" />
-<!--			<el-table-column label="通知人" prop="farmerNickName" />-->
-<!--			<el-table-column label="部门" prop="farmerDept" />-->
-			<el-table-column label="时间" prop="time" />
-			<el-table-column label="备注" prop="remarks" />
-			<el-table-column label="状态" prop="status">
+			<el-table-column label="通知人员" prop="farmerNickName" />
+			<el-table-column label="所属部门" prop="farmerDept" />
+			<el-table-column label="时间记录" prop="time" />
+			<el-table-column label="备注信息" prop="remarks" />
+			<el-table-column label="状态信息" prop="status">
 				<template slot-scope="scope">
 					<el-tag v-if="scope.row.status === 0">未处理</el-tag>
 					<el-tag v-if="scope.row.status === 1">处理中</el-tag>
-					<el-tag v-if="scope.row.status === 2">处理完成</el-tag>
+					<el-tag v-if="scope.row.status === 2">已完成</el-tag>
 				</template>
 			</el-table-column>
 			<el-table-column label="操作" align="center" class-name="small-padding fixed-width">
 				<template slot-scope="scope">
-					<el-button v-show="scope.row.status === 0" size="mini" type="text" @click="startTransport(scope.row)">通知</el-button>
+					<el-button v-show="scope.row.status === 0" size="mini" type="text" @click="startTransport(scope.row)">开启通知</el-button>
 <!--					<el-button v-show="scope.row.status === 1" size="mini" type="text" @click="transportLocation(scope.row)">中途定位</el-button>-->
 					<el-button v-show="scope.row.status === 1" size="mini" type="text" @click="isOk(scope.row)">通知完毕</el-button>
 <!--					<el-button size="mini" type="text" @click="isOk(scope.row)">物流追踪</el-button>-->
@@ -62,7 +63,8 @@ export default {
 			// 查询参数
 			queryParams: {
 				deptName: undefined,
-				status: undefined
+				status: undefined,
+        cropsId: undefined,
 			},
 			// 表单参数
 			form: {},

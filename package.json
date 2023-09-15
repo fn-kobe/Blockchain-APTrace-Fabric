@@ -1,0 +1,20 @@
+{
+  "name": "Blockchain-APTrace-Fabric",
+  "version": "1.0.0",
+  "description": "基于区块链的农产品溯源系统，分为pc端，h5端，后台采用SpringBoot，前端Vue，\r 区块链网络采用Fabric，一共分为六个组织节点，农户，原料厂商，生产厂商，物流厂商，零售商，消费者 .",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fn-kobe/Blockchain-APTrace-Fabric.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fn-kobe/Blockchain-APTrace-Fabric/issues"
+  },
+  "homepage": "https://github.com/fn-kobe/Blockchain-APTrace-Fabric#readme"
+}

@@ -6,10 +6,9 @@
           <svg-icon icon-class="peoples" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">
-            访客
+          <div align="center">
+            当前区块链高度 : <font color="blueviolet" style="font-size: 30px;">{{channelBlockInfo.data.height.low}}</font>
           </div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -55,21 +54,129 @@
   </el-row>
 </template>
 
-<script>
-import CountTo from 'vue-count-to'
+<!--<script>-->
+<!--import CountTo from 'vue-count-to'-->
 
-export default {
-  components: {
-    CountTo
-  },
-  methods: {
-    handleSetLineChartData(type) {
-      this.$emit('handleSetLineChartData', type)
+<!--export default {-->
+<!--  components: {-->
+<!--    CountTo-->
+<!--  },-->
+<!--  methods: {-->
+<!--    handleSetLineChartData(type) {-->
+<!--      this.$emit('handleSetLineChartData', type)-->
+<!--    }-->
+<!--  }-->
+<!--}-->
+<!--</script>-->
+
+<script>
+import axios from 'axios'
+export default{
+  data(){
+    return{
+      queryBlockByNumDrawer:false,
+      channelBlockInfo:'',
+      blockInfo:'',
+      previousBlockInfo:'',
+      previousBlockInfo2:'',
+      previousBlockInfo3:'',
+      previousBlockInfo4:'',
+      open:false,
+      blockInfoHash:'',
     }
-  }
+  },
+  created() {
+    this.$httpBlock.get(this.$httpUrl+"/blockexplorerapi/channelBlockInfo")
+      .then(res => {
+        this.channelBlockInfo = res;
+        //当前区块
+        var number = Number(this.channelBlockInfo.data.height.low - 1);
+        this.$httpBlock.get(this.$httpUrl+"/blockexplorerapi/queryBlockInfo?number="+number)
+          .then(res => {
+            this.blockInfo = res;
+          }).catch(err => {
+          console.log("err "+err)
+        })
+
+        //前一个区块
+        var previous = Number(this.channelBlockInfo.data.height.low - 2);
+        this.$httpBlock.get(this.$httpUrl+"/blockexplorerapi/queryBlockInfo?number="+previous)
+          .then(res => {
+            this.previousBlockInfo = res;
+          }).catch(err => {
+          console.log("err "+err)
+        })
+
+        //前2个区块
+        var previous2 = Number(this.channelBlockInfo.data.height.low - 3);
+        this.$httpBlock.get(this.$httpUrl+"/blockexplorerapi/queryBlockInfo?number="+previous2)
+          .then(res => {
+            this.previousBlockInfo2 = res;
+          }).catch(err => {
+          console.log("err "+err)
+        })
+
+        //前3个区块
+        var previous3 = Number(this.channelBlockInfo.data.height.low - 4);
+        this.$httpBlock.get(this.$httpUrl+"/blockexplorerapi/queryBlockInfo?number="+previous3)
+          .then(res => {
+            this.previousBlockInfo3 = res;
+          }).catch(err => {
+          console.log("err "+err)
+        })
+
+        //前4个区块
+        var previous4 = Number(this.channelBlockInfo.data.height.low - 5);
+        this.$httpBlock.get(this.$httpUrl+"/blockexplorerapi/queryBlockInfo?number="+previous4)
+          .then(res => {
+            this.previousBlockInfo4 = res;
+          }).catch(err => {
+          console.log("err "+err)
+        })
+
+        //前5个区块
+        var previous5 = Number(this.channelBlockInfo.data.height.low - 5);
+        this.$httpBlock.get(this.$httpUrl+"/blockexplorerapi/queryBlockInfo?number="+previous5)
+          .then(res => {
+            this.previousBlockInfo5 = res;
+          }).catch(err => {
+          console.log("err "+err)
+        })
+
+      }).catch(err => {
+      console.log("err "+err)
+    })
+
+    //this.getHash();
+  },
+  methods:{
+    queryInfo(hash){
+      this.open = true
+      this.$httpBlock.get(this.$httpUrl+"/blockexplorerapi/queryBlockBuHash?hash="+hash)
+        .then(res => {
+          this.blockInfoHash = res;
+        }).catch(err => {
+        console.log("err "+err)
+      })
+    },
+
+    getHash(){
+      var number = Number(this.channelBlockInfo.data.height.low );
+      this.$httpBlock.get(this.$httpUrl+"/blockexplorerapi/queryBlockInfo?number="+number)
+        .then(res => {
+          this.blockInfo = res;
+        }).catch(err => {
+        console.log("err "+err)
+      })
+    },
+
+    queryBlockByNum(){
+      this.queryBlockByNumDrawer = true;
+    }
+
+  },
 }
 </script>
-
 <style lang="scss" scoped>
 .panel-group {
   margin-top: 18px;

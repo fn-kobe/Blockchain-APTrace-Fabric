@@ -1,22 +1,22 @@
 <template>
 	<div class="app-container">
-    <el-divider>待处理业务</el-divider>
+    <el-divider>处理业务</el-divider>
 
 		<el-table v-loading="loading" :data="cropsList" @selection-change="handleSelectionChange">
 			<el-table-column type="selection" width="55" align="center" />
 			<el-table-column label="id" prop="id" />
 			<el-table-column label="需求编号" prop="cropsId" />
-<!--			<el-table-column label="原料厂商" prop="farmerDept" />-->
+			<el-table-column label="原料厂商" prop="farmerDept" />
 			<el-table-column label="资源名称" prop="cropsName" />
-<!--			<el-table-column label="原料厂商负责人" prop="farmerNickName" />-->
+			<el-table-column label="负责人员" prop="farmerNickName" />
 			<el-table-column label="生产状态" prop="maching">
 				<template slot-scope="scope">
 					<el-tag v-show="scope.row.machingStatus === null">未生产</el-tag>
-					<el-tag type="danger" v-show="scope.row.machingStatus === 1">生产中(任务已经分发)</el-tag>
+					<el-tag type="danger" v-show="scope.row.machingStatus === 1">生产中(任务已分)</el-tag>
 					<el-tag type="warning" v-show="scope.row.machingStatus === 2">生产完成</el-tag>
 				</template>
 			</el-table-column>
-			<el-table-column label="库状态" prop="out_factory_status">
+			<el-table-column label="在库状态" prop="out_factory_status">
 				<template slot-scope="scope">
 					<el-tag v-show="scope.row.outFactoryStatus === null">未出库</el-tag>
 					<el-tag v-show="scope.row.outFactoryStatus === 1">已出库</el-tag>
@@ -25,11 +25,11 @@
 			<el-table-column label="操作" align="center" class-name="small-padding fixed-width">
 				<template slot-scope="scope">
 					<el-button v-show="scope.row.machingStatus !== 1 && scope.row.machingStatus !== 2" size="mini" type="text" @click="taskDistribution(scope.row)">任务分发</el-button>
-					<el-button v-show="scope.row.machingStatus !== null" size="mini" type="text" @click="queryTaskByCropsId(scope.row)">查看任务分发信息</el-button>
-					<el-button v-show="scope.row.productWriteStatus !== 1" size="mini" type="text" @click="addThing(scope.row)">填写产品基本信息</el-button>
-					<el-button v-show="scope.row.productWriteStatus !== null" size="mini" type="text" @click="queryProductInfo(scope.row)">查看产品基本信息</el-button>
-<!--					<el-button size="mini" type="text" @click="staffWork(scope.row)">员工工作量</el-button>-->
-<!--					<el-button size="mini" type="text" @click="noticeTransport(scope.row)">通知运输</el-button>-->
+					<el-button v-show="scope.row.machingStatus !== null" size="mini" type="text" @click="queryTaskByCropsId(scope.row)">分发详情</el-button>
+					<el-button v-show="scope.row.productWriteStatus !== 1" size="mini" type="text" @click="addThing(scope.row)">产品信息</el-button>
+					<el-button v-show="scope.row.productWriteStatus !== null" size="mini" type="text" @click="queryProductInfo(scope.row)">查看产品</el-button>
+					<el-button size="mini" type="text" @click="staffWork(scope.row)">员工记录</el-button>
+					<el-button size="mini" type="text" @click="noticeTransport(scope.row)">通知运输</el-button>
 					<el-button v-show="scope.row.outFactoryStatus === null" size="mini" type="text" @click="outFactory(scope.row)">产品出库</el-button>
 				</template>
 			</el-table-column>
@@ -37,10 +37,10 @@
 
 		<pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" @pagination="getList" />
 
-		<el-dialog center title="任务分发" :visible.sync="open" width="700px" append-to-body>
+		<el-dialog center title="任务分配" :visible.sync="open" width="700px" append-to-body>
 			<el-form ref="form" :model="form" label-width="80px">
-				<el-form-item label="任务标题"><el-input v-model="form.taskName" placeholder="请输入任务标题"></el-input></el-form-item>
-				<el-form-item label="任务分工内容"><el-input v-model="form.taskRemark" type="textarea" placeholder="请输入内容"></el-input></el-form-item>
+				<el-form-item label="任务标题"><el-input v-model="form.taskName" placeholder="请输入"></el-input></el-form-item>
+				<el-form-item label="分工内容"><el-input v-model="form.taskRemark" type="textarea" placeholder="请输入"></el-input></el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
 				<el-button type="primary" @click="addTask">确 定</el-button>
@@ -52,18 +52,18 @@
 			<el-form ref="form" label-width="80px" :model="recordForm">
 			<el-row>
 				<el-col :span="12">
-					<el-form-item label="品名" prop="nickName"><el-input v-model="recordForm.ProductName" placeholder="请输入" /></el-form-item>
+					<el-form-item label="资源名称" prop="nickName"><el-input v-model="recordForm.ProductName" placeholder="请输入" /></el-form-item>
 				</el-col>
 				<el-col :span="12">
-					<el-form-item label="原材料" prop="nickName"><el-input v-model="recordForm.MixedIngredients" placeholder="请输入" /></el-form-item>
+					<el-form-item label="生产原料" prop="nickName"><el-input v-model="recordForm.MixedIngredients" placeholder="请输入" /></el-form-item>
 				</el-col>
 			</el-row>
 			<el-row>
 				<el-col :span="12">
-					<el-form-item label="负责人" prop="nickName"><el-input v-model="recordForm.Leader" placeholder="请输入" /></el-form-item>
+					<el-form-item label="负责人员" prop="nickName"><el-input v-model="recordForm.Leader" placeholder="请输入" /></el-form-item>
 				</el-col>
 				<el-col :span="12">
-					<el-form-item label="电话" prop="nickName"><el-input v-model="recordForm.LeaderTel" placeholder="请输入" /></el-form-item>
+					<el-form-item label="电话号码" prop="nickName"><el-input v-model="recordForm.LeaderTel" placeholder="请输入" /></el-form-item>
 				</el-col>
 			</el-row>
 			<el-row>
@@ -77,18 +77,18 @@
 
 			<el-row>
 				<el-col :span="12">
-					<el-form-item label="工艺" prop="nickName">
+					<el-form-item label="保养方法" prop="nickName">
 						 <el-input v-model="recordForm.KeepMethod" placeholder="请输入" />
 					</el-form-item>
 				</el-col>
 				<el-col :span="12">
-					<el-form-item label="生产规格" prop="nickName">
+					<el-form-item label="生产标准" prop="nickName">
 						 <el-input v-model="recordForm.NetContent" placeholder="请输入" />
 					</el-form-item>
 				</el-col>
 			</el-row>
-			<el-form-item label="质检信息"><el-input v-model="recordForm.CookingRecommend" type="textarea" placeholder="请输入内容"></el-input></el-form-item>
-			<el-form-item label="备注"><el-input v-model="recordForm.Remarks" type="textarea" placeholder="请输入内容"></el-input></el-form-item>
+			<el-form-item label="质检信息"><el-input v-model="recordForm.CookingRecommend" type="textarea" placeholder="请输入"></el-input></el-form-item>
+			<el-form-item label="备注信息"><el-input v-model="recordForm.Remarks" type="textarea" placeholder="请输入"></el-input></el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
 				<el-button type="primary" @click="submitProductInfo">确 定</el-button>
@@ -96,7 +96,7 @@
 			</div>
 		</el-dialog>
 
-		<el-dialog center title="任务下发详情" :visible.sync="taskInfoDialog" width="700px" append-to-body>
+		<el-dialog center title="任务分配详情" :visible.sync="taskInfoDialog" width="700px" append-to-body>
 			<el-row>
 				<el-col :span="12">任务ID：{{ taskInfo.taskId }}</el-col>
 				<el-col :span="12">任务名称：{{ taskInfo.taskName }}</el-col>
@@ -127,87 +127,87 @@
 			</el-row>
 			<el-divider></el-divider>
 			<el-row>
-				<el-col :span="12">生产规格：{{ productInfos.Net_Content }}</el-col>
-				<el-col :span="12">工艺：{{ productInfos.keep_mathod }}</el-col>
+				<el-col :span="12">生产标准：{{ productInfos.Net_Content }}</el-col>
+				<el-col :span="12">保养方法：{{ productInfos.keep_mathod }}</el-col>
 			</el-row>
 			<el-divider></el-divider>
 			<el-row>
-				<el-col :span="12">负责人：{{ productInfos.leader }}</el-col>
-				<el-col :span="12">负责人电话：{{ productInfos.leader }}</el-col>
+				<el-col :span="12">负责人员：{{ productInfos.leader }}</el-col>
+				<el-col :span="12">电话号码：{{ productInfos.leader_tel }}</el-col>
 			</el-row>
 			<el-divider></el-divider>
 			<el-row>
-				<el-col :span="12">原材料：{{ productInfos.mixed_ingredients }}</el-col>
-				<el-col :span="12">工时：{{ productInfos.work_hours }}</el-col>
+				<el-col :span="12">加工原料：{{ productInfos.mixed_ingredients }}</el-col>
+				<el-col :span="12">生产工时：{{ productInfos.work_hours }}</el-col>
 			</el-row>
 			<el-divider></el-divider>
 			<el-row>
-				<el-col :span="12">车间：{{ productInfos.workshop }}</el-col>
+				<el-col :span="12">生产车间：{{ productInfos.workshop }}</el-col>
 				<el-col :span="12">数据上链时间：{{ productInfos.time }}</el-col>
 			</el-row>
 			<el-divider></el-divider>
 			<el-row>
 				<el-col :span="12">质检信息：{{ productInfos.cooking_recommend }}</el-col>
-				<el-col :span="12">备注：{{ productInfos.remarks }}</el-col>
+				<el-col :span="12">备注信息：{{ productInfos.remarks }}</el-col>
 			</el-row>
 		</el-dialog>
 
-<!--		<el-dialog center title="员工工作量证明" :visible.sync="staffWorkDialog" width="1200px" append-to-body>-->
-<!--			<el-row :gutter="8" >-->
-<!--				<el-col :span="6" v-for="(info,index) in operationList" :key="index" style="padding-top: 10px;">-->
-<!--                <el-card style="border-color: #42b983;">-->
-<!--					<el-row>-->
-<!--						<el-col :span="24">操作ID：{{ info.operation_id }}</el-col>-->
-<!--					</el-row>-->
-<!--					<br>-->
-<!--					<el-row>-->
-<!--						<el-col :span="24">操作人：{{ info.operation_people_name }}</el-col>-->
-<!--					</el-row>-->
-<!--					<br>-->
-<!--					<el-row>-->
-<!--						<el-col :span="24">操作人电话：{{ info.operation_people_tel }}</el-col>-->
-<!--					</el-row>-->
-<!--					<br>-->
-<!--					<el-row>-->
-<!--						<el-col :span="24">操作时间：{{ info.time }}</el-col>-->
-<!--					</el-row>-->
-<!--					<br>-->
-<!--					<el-row>-->
-<!--						<el-col :span="24">操作内容：{{ info.work_content }}</el-col>-->
-<!--					</el-row>-->
-<!--                </el-card>-->
-<!--				</el-col>-->
-<!--				<br>-->
-<!--			</el-row>-->
-<!--		</el-dialog>-->
+		<el-dialog center title="员工工作量证明" :visible.sync="staffWorkDialog" width="1200px" append-to-body>
+			<el-row :gutter="8" >
+				<el-col :span="6" v-for="(info,index) in operationList" :key="index" style="padding-top: 10px;">
+                <el-card style="border-color: #42b983;">
+					<el-row>
+						<el-col :span="24">操作ID：{{ info.operation_id }}</el-col>
+					</el-row>
+					<br>
+					<el-row>
+						<el-col :span="24">操作人员：{{ info.operation_people_name }}</el-col>
+					</el-row>
+					<br>
+					<el-row>
+						<el-col :span="24">电话号码：{{ info.operation_people_tel }}</el-col>
+					</el-row>
+					<br>
+					<el-row>
+						<el-col :span="24">操作时间：{{ info.time }}</el-col>
+					</el-row>
+					<br>
+					<el-row>
+						<el-col :span="24">操作内容：{{ info.work_content }}</el-col>
+					</el-row>
+                </el-card>
+				</el-col>
+				<br>
+			</el-row>
+		</el-dialog>
 
-<!--		<el-dialog center title="联系运输" :visible.sync="noticeDetaiDialog" width="500px" append-to-body>-->
-<!--			<el-form ref="form" :model="trasportForm" label-width="80px">-->
-<!--				<el-row>-->
-<!--					<el-col :span="24">-->
-<!--						<el-form-item label="选择司机" prop="nickName">-->
-<!--							<el-select v-model="trasportForm.userName" placeholder="请选择">-->
-<!--								<el-option v-for="user in driverList" :key="user.userName" :label="user.nickName" :value="user.userName"></el-option>-->
-<!--							</el-select>-->
-<!--						</el-form-item>-->
-<!--					</el-col>-->
-<!--				</el-row>-->
-<!--				<el-row>-->
-<!--					<el-col :span="24">-->
-<!--						<el-form-item label="零售商" prop="nickName">-->
-<!--							<el-select v-model="trasportForm.deptId" placeholder="请选择">-->
-<!--								<el-option v-for="dept in factoryList" :key="dept.deptId" :label="dept.deptName" :value="dept.deptId"></el-option>-->
-<!--							</el-select>-->
-<!--						</el-form-item>-->
-<!--					</el-col>-->
-<!--				</el-row>-->
-<!--				<el-form-item label="备注"><el-input v-model="trasportForm.remarks" type="textarea" placeholder="请输入内容"></el-input></el-form-item>-->
-<!--			</el-form>-->
-<!--			<div slot="footer" class="dialog-footer">-->
-<!--				<el-button type="primary" @click="addNoticeTrasport">确 定</el-button>-->
-<!--				<el-button @click="cancel">取 消</el-button>-->
-<!--			</div>-->
-<!--		</el-dialog>-->
+		<el-dialog center title="联系运输" :visible.sync="noticeDetaiDialog" width="500px" append-to-body>
+			<el-form ref="form" :model="trasportForm" label-width="80px">
+				<el-row>
+					<el-col :span="24">
+						<el-form-item label="操作人员" prop="nickName">
+							<el-select v-model="trasportForm.userName" placeholder="请选择">
+								<el-option v-for="user in driverList" :key="user.userName" :label="user.nickName" :value="user.userName"></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+				</el-row>
+				<el-row>
+					<el-col :span="24">
+						<el-form-item label="零售商家" prop="nickName">
+							<el-select v-model="trasportForm.deptId" placeholder="请选择">
+								<el-option v-for="dept in factoryList" :key="dept.deptId" :label="dept.deptName" :value="dept.deptId"></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+				</el-row>
+				<el-form-item label="备注信息"><el-input v-model="trasportForm.remarks" type="textarea" placeholder="请输入内容"></el-input></el-form-item>
+			</el-form>
+			<div slot="footer" class="dialog-footer">
+				<el-button type="primary" @click="addNoticeTrasport">确 定</el-button>
+				<el-button @click="cancel">取 消</el-button>
+			</div>
+		</el-dialog>
 
 	</div>
 </template>
@@ -251,7 +251,7 @@ export default {
 			// 日期范围
 			dateRange: [],
 			// 状态数据字典
-			statusOptions: ['在种', '停种'],
+			statusOptions: ['在库', '出库'],
 
 			beggingOptions: [],
 			plantModeOptions: [], //种植方式

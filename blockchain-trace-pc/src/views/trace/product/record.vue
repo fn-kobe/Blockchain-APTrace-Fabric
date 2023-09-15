@@ -1,11 +1,11 @@
 <template>
 	<div class="app-container">
-		<el-divider>待处理工作业务</el-divider>
+		<el-divider>工作业务记录</el-divider>
 		<el-table :data="taskLists">
 			<el-table-column type="selection" width="55" align="center" />
 			<el-table-column label="任务编号" prop="taskId" />
 			<el-table-column label="任务名称" prop="taskName" />
-<!--			<el-table-column label="发布人" prop="leaderName" />-->
+			<el-table-column label="发布人员" prop="leaderName" />
 			<el-table-column label="时间" prop="time" />
 			<el-table-column label="具体内容" prop="taskRemark" />
 			<el-table-column label="操作" align="center" class-name="small-padding fixed-width">

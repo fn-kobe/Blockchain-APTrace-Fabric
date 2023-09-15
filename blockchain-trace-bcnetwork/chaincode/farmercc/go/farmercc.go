@@ -13,7 +13,7 @@ type SmartContract struct {
 }
 
 type Crops struct {
-	//作物ID
+	//ID
 	CropsId string `json:"crops_id"`
 	//作物名称
 	CropsName string `json:"crops_name"`

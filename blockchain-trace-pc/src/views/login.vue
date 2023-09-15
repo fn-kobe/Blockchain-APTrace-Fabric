@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">基于区块链的多链业务协同构件</h3>
+      <h3 class="title">基于区块链的多链业务协同构件——资源协调V2.0</h3>
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
@@ -55,23 +55,22 @@
           <span >链上数据查看</span>
         </el-button>
       </el-form-item>
-      <el-form-item style="width:100%;">
-        <el-button
-          size="medium"
-          type="info"
-          style="width:100%;"
-          @click.native.prevent="addRoutes"
-        >
-          <span >返回到上一模块界面</span>
-        </el-button>
-      </el-form-item>
+<!--      <el-form-item style="width:100%;">-->
+<!--        <el-button-->
+<!--          size="medium"-->
+<!--          type="info"-->
+<!--          style="width:100%;"-->
+<!--          @click.native.prevent="addRoutes"-->
+<!--        >-->
+<!--          <span >返回到上一模块界面</span>-->
+<!--        </el-button>-->
+<!--      </el-form-item>-->
     </el-form>
     <!--  底部  -->
-
     <el-dialog
       title="链上数据详情"
       :visible.sync="drawer"
-      width="95%">
+      width="98%">
       <el-divider content-position="left">区块信息</el-divider>
       <div>
         <Trace></Trace>
@@ -175,7 +174,7 @@ export default {
       });
     },
     addRoutes() {
-      window.location.href = "http://192.168.1.103:8080/JavaCharts_war_exploded/index.jsp";
+      window.location.href = "http://localhost:8080/JavaCharts_war_exploded/index.jsp";
     }
   }
 };
@@ -191,15 +190,16 @@ export default {
   background-size: cover;
 }
 .title {
-  margin: 0px auto 30px auto;
+  margin: px auto 50px auto;
   text-align: center;
+  width: 470px;
   color: #707070;
 }
 
 .login-form {
   border-radius: 6px;
   background: #ffffff;
-  width: 400px;
+  width: 500px;
   padding: 25px 25px 5px 25px;
   .el-input {
     height: 38px;

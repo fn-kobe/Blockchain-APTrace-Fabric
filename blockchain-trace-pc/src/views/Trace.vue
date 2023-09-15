@@ -1,19 +1,19 @@
 <template>
   <div style="height: 700px;overflow: auto;">
-    <el-row :gutter="30">
+    <el-row :gutter="20">
       <el-col :span="8">
         <avue-data-tabs :option="option"></avue-data-tabs>
         <br />
         <div>
           <div>
             <el-row>
-              <el-col :span="24">区块编号：{{ blockInfo.data.header.number }}</el-col>
+              <el-col :span="30">区块编号：{{ blockInfo.data.header.number }}</el-col>
             </el-row>
             <br />
             <el-row>
               <el-col :span="24">
                 前置Hash：
-                <el-link @click="queryInfo(blockInfo.data.header.previous_hash)" type="success">{{ blockInfo.data.header.previous_hash }}<span style="color: red">(点击查看区块信息)</span></el-link>
+                <el-link @click="queryInfo(blockInfo.data.header.previous_hash)" type="success">{{ blockInfo.data.header.previous_hash }}<span style="color: red"></span></el-link>
               </el-col>
             </el-row>
             <br />
@@ -35,7 +35,7 @@
             <el-row>
               <el-col :span="24">
                 前置Hash：
-                <el-link @click="queryInfo(previousBlockInfo.data.header.previous_hash)" type="success">{{ previousBlockInfo.data.header.previous_hash }}<span style="color: red">(点击查看区块信息)</span></el-link>
+                <el-link @click="queryInfo(previousBlockInfo.data.header.previous_hash)" type="success">{{ previousBlockInfo.data.header.previous_hash }}<span style="color: red"></span></el-link>
               </el-col>
             </el-row>
             <br />
@@ -59,7 +59,7 @@
               <el-col :span="24">
                 前置Hash：
                 <el-link @click="queryInfo(previousBlockInfo2.data.header.previous_hash)" type="success">
-                  {{ previousBlockInfo2.data.header.previous_hash }}<span style="color: red">(点击查看区块信息)</span>
+                  {{ previousBlockInfo2.data.header.previous_hash }}<span style="color: red"></span>
                 </el-link>
               </el-col>
             </el-row>
@@ -71,180 +71,225 @@
               </el-col>
             </el-row>
           </div>
+
+          <div align="center">
+            <el-divider content-position="left"><i class="el-icon-top"></i></el-divider>
+          </div>
+          <div>
+            <el-row>
+              <el-col :span="24">区块编号：{{ previousBlockInfo3.data.header.number }}</el-col>
+            </el-row>
+            <br />
+            <el-row>
+              <el-col :span="24">
+                前置Hash：
+                <el-link @click="queryInfo(previousBlockInfo3.data.header.previous_hash)" type="success">
+                  {{ previousBlockInfo3.data.header.previous_hash }}<span style="color: red"></span>
+                </el-link>
+              </el-col>
+            </el-row>
+            <br />
+            <el-row>
+              <el-col :span="24">
+                数据Hash：
+                <el-link :underline="false" type="success">{{ previousBlockInfo3.data.header.data_hash }}</el-link>
+              </el-col>
+            </el-row>
+          </div>
+
+
         </div>
       </el-col>
-<!--      <el-col :span="16">-->
-<!--        <div>-->
-<!--          <el-input style="width: 40%;" v-model="traceId" placeholder="制造资源编号"></el-input>-->
-<!--          &nbsp;&nbsp;&nbsp;-->
-<!--          <el-button type="success" @click="query">查询</el-button>-->
-<!--        </div>-->
-<!--        <br />-->
-<!--        <div>-->
-<!--          <el-row>-->
-<!--            <el-col :span="6">-->
-<!--              <el-form>-->
-<!--                <el-form-item><span style="color: #13CE66;">资源功能信息</span></el-form-item>-->
-<!--                <el-form-item label="制造资源名称:">{{ productData.factory }}</el-form-item>-->
-<!--                <el-form-item label="制造资源类别:">{{ productData.factory }}</el-form-item> -->
-<!--                 <el-form-item label="制造资源ID:">{{ productData.factory }}</el-form-item>-->
-<!--                <el-form-item label="价格:">{{ productData.leader }}</el-form-item>-->
-<!--                <el-form-item label="产能:">{{ productData.leader_tel }}</el-form-item>-->
-<!--                <el-form-item label="地址:">{{ productData.Net_Content }}</el-form-item>-->
-<!--                <el-form-item label="可用时间:">{{ productData.workshop }}</el-form-item>-->
-<!--                &lt;!&ndash; <el-form-item label="生产工时">{{ productData.work_hours }}</el-form-item>-->
-<!--                <el-form-item label="保存方法">{{ productData.keep_mathod }}</el-form-item>-->
-<!--                <el-form-item label="食用推荐">{{ productData.cooking_recommend }}</el-form-item> &ndash;&gt;-->
-<!--              </el-form>-->
-<!--            </el-col>-->
-<!--            <el-col :span="6">-->
-<!--              <el-form>-->
-<!--                <el-form-item><span style="color: #13CE66;">服务质量信息</span></el-form-item>-->
-<!--                <el-form-item label="运费承担:">{{ retailerInfo.product_id }}</el-form-item>-->
-<!--                <el-form-item label="历史合作情况:">{{ productData.product_name }}</el-form-item>-->
-<!--                <el-form-item label="资源可靠程度:">{{ retailerInfo.retailer }}</el-form-item>-->
-<!--                <el-form-item label="质检信息:">{{ retailerInfo.retailer_name }}</el-form-item>-->
-<!--                &lt;!&ndash; <el-form-item label="电话">{{ retailerInfo.retailer_tel }}</el-form-item> &ndash;&gt;-->
-<!--              </el-form>-->
-<!--            </el-col>-->
-<!--            &lt;!&ndash; <el-col :span="12">-->
-<!--              <el-tabs v-model="activeName" @tab-click="handleClick">-->
-<!--                <el-tab-pane label="种植过程" name="1">-->
-<!--                  <el-row :gutter="8">-->
-<!--                    <el-col :span="24" v-for="(info, index) in cropsProcessDetailsArray" :key="index" style="padding-top: 10px;">-->
-<!--                      <el-card style="border-color: #42b983;">-->
-<!--                        <el-col :span="12">-->
-<!--                          <el-row>-->
-<!--                            <el-col :span="24">生长情况：{{ info.grow_status }}</el-col>-->
-<!--                          </el-row>-->
-<!--                          <br />-->
-<!--                          <el-row>-->
-<!--                            <el-col :span="24">光照情况：{{ info.illumination_status }}</el-col>-->
-<!--                          </el-row>-->
-<!--                          <br />-->
-<!--                          <el-row>-->
-<!--                            <el-col :span="24">水分：{{ info.water_content }}</el-col>-->
-<!--                          </el-row>-->
-<!--                          <br />-->
-<!--                          <el-row>-->
-<!--                            <el-col :span="24">温度：{{ info.temperature }}</el-col>-->
-<!--                          </el-row>-->
-<!--                          <br />-->
-<!--                          <el-row>-->
-<!--                            <el-col :span="24">记录时间：{{ info.record_time }}</el-col>-->
-<!--                          </el-row>-->
-<!--                          <br />-->
-<!--                          <el-row>-->
-<!--                            <el-col :span="24">备注：{{ info.remarks }}</el-col>-->
-<!--                          </el-row>-->
-<!--                        </el-col>-->
-<!--                        <el-col :span="12"><img style="width: 100%;height: 11.05rem;" :src="info.crops_grow_photo_url" /></el-col>-->
-<!--                      </el-card>-->
-<!--                    </el-col>-->
-<!--                    <br />-->
-<!--                  </el-row>-->
-<!--                </el-tab-pane>-->
-<!--                <el-tab-pane label="流通行为" name="2">-->
-<!--                  <div class="block">-->
-<!--                    <el-timeline v-for="(detail,index) in cropsDriverArray">-->
-<!--                      <el-timeline-item :timestamp="detail.transport_to_chain_time" placement="top" >-->
-<!--                        <el-card>-->
-<!--                          <h4 style="color: red;">经过地:{{detail.transport_to_address}}</h4>-->
-<!--                          <p>物流ID:{{detail.transport_id}}</p>-->
-<!--                          <p>司机:{{detail.driver_name}}</p>-->
-<!--                          <p>电话:{{detail.driver_tel}}</p>-->
-<!--                          <p>备注:{{detail.remarks}}</p>-->
-<!--                        </el-card>-->
-<!--                      </el-timeline-item>-->
-<!--                    </el-timeline>-->
-<!--                  </div>-->
-<!--                </el-tab-pane>-->
-<!--                <el-tab-pane label="厂商质检" name="3">-->
-<!--                  <el-card style="border-color: #42b983;">-->
-<!--                    <el-col :span="12">-->
-<!--                      <el-row>-->
-<!--                        <el-col :span="24">负责人：{{ machingInfo.leader }}</el-col>-->
-<!--                      </el-row>-->
-<!--                      <br /><br />-->
-<!--                      <el-row>-->
-<!--                        <el-col :span="24">电话：{{ machingInfo.leader_tel }}</el-col>-->
-<!--                      </el-row>-->
-<!--                      <br /><br />-->
-<!--                      <el-row>-->
-<!--                        <el-col :span="24">原料厂商：{{ machingInfo.factory_name }}</el-col>-->
-<!--                      </el-row>-->
-<!--                      <br /><br />-->
-<!--                      <el-row>-->
-<!--                        <el-col :span="24">入厂时间：{{ machingInfo.in_factory_time }}</el-col>-->
-<!--                      </el-row>-->
-<!--                      <br /><br />-->
-<!--                      <el-row>-->
-<!--                        <el-col :span="24">出厂时间：{{ machingInfo.out_factory_time }}</el-col>-->
-<!--                      </el-row>-->
-<!--                      <br /><br />-->
-<!--                      <el-row>-->
-<!--                        <el-col :span="24">检测结果：{{ machingInfo.testing_result }}</el-col>-->
-<!--                      </el-row>-->
-<!--                      <br /><br />-->
-<!--                      <el-row>-->
-<!--                        <el-col :span="24">备注：{{ machingInfo.remarks }}</el-col>-->
-<!--                      </el-row>-->
-<!--                      <br />-->
-<!--                    </el-col>-->
-<!--                    <el-col :span="12"><img style="width: 100%;height: 21.05rem;" :src="machingInfo.testing_photo_url" /></el-col>-->
-<!--                  </el-card>-->
-<!--                </el-tab-pane>-->
-<!--                <el-tab-pane label="生产行为" name="4">-->
-<!--                  <el-row :gutter="8" >-->
-<!--                    <el-col :span="24" v-for="(info,index) in operationArray" :key="index" style="padding-top: 10px;">-->
-<!--                      <el-card style="border-color: #42b983;">-->
-<!--                        <el-row>-->
-<!--                          <el-col :span="24">操作ID：{{ info.operation_id }}</el-col>-->
-<!--                        </el-row>-->
-<!--                        <br>-->
-<!--                        <el-row>-->
-<!--                          <el-col :span="24">操作人：{{ info.operation_people_name }}</el-col>-->
-<!--                        </el-row>-->
-<!--                        <br>-->
-<!--                        <el-row>-->
-<!--                          <el-col :span="24">操作人电话：{{ info.operation_people_tel }}</el-col>-->
-<!--                        </el-row>-->
-<!--                        <br>-->
-<!--                        <el-row>-->
-<!--                          <el-col :span="24">操作时间：{{ info.time }}</el-col>-->
-<!--                        </el-row>-->
-<!--                        <br>-->
-<!--                        <el-row>-->
-<!--                          <el-col :span="24">操作内容：{{ info.work_content }}</el-col>-->
-<!--                        </el-row>-->
-<!--                      </el-card>-->
-<!--                    </el-col>-->
-<!--                    <br>-->
-<!--                  </el-row>-->
-<!--                </el-tab-pane>-->
-<!--                <el-tab-pane label="农产信息" name="5">-->
-<!--                  <el-card style="border-color: #42b983;">-->
-<!--                    <el-row><el-col :span="24">农产名字：{{ cropsDetails.crops_name }}</el-col></el-row><br><br>-->
-<!--                    <el-row><el-col :span="24">种植户：{{ cropsDetails.farmer_name }}</el-col></el-row><br><br>-->
-<!--                    <el-row><el-col :span="24">电话：{{ cropsDetails.farmer_tel }}</el-col></el-row><br><br>-->
-<!--                    <el-row><el-col :span="24">地址：{{ cropsDetails.address }}</el-col></el-row><br><br>-->
-<!--                    <el-row><el-col :span="24">种植方式：{{ cropsDetails.plant_mode }}</el-col></el-row><br><br>-->
-<!--                    <el-row><el-col :span="24">年度：{{ cropsDetails.year }}</el-col></el-row><br><br>-->
-<!--                    <el-row><el-col :span="24">套袋方式：{{ cropsDetails.bagging_status }}</el-col></el-row><br><br>-->
-<!--                    <el-row><el-col :span="24">使用肥料：{{ cropsDetails.fertilizer_name }}</el-col></el-row><br><br>-->
-<!--                    <el-row><el-col :span="24">育苗周期：{{ cropsDetails.grow_seedlings_cycle }}</el-col></el-row><br><br>-->
-<!--                    <el-row><el-col :span="24">灌溉周期：{{ cropsDetails.irrigation_cycle }}</el-col></el-row><br><br>-->
-<!--                    <el-row><el-col :span="24">除草周期：{{ cropsDetails.weed_cycle }}</el-col></el-row><br><br>-->
-<!--                    <el-row><el-col :span="24">施肥周期：{{ cropsDetails.apply_fertilizer_cycle }}</el-col></el-row><br><br>-->
-<!--                    <el-row><el-col :span="24">注册时间：{{ cropsDetails.register_time }}</el-col></el-row><br><br>-->
-<!--                    <el-row><el-col :span="24">备注：{{ cropsDetails.remarks }}</el-col></el-row><br>-->
-<!--                  </el-card>-->
-<!--                </el-tab-pane>-->
-<!--              </el-tabs> &ndash;&gt;-->
-<!--            &lt;!&ndash; </el-col> &ndash;&gt;-->
-<!--          </el-row>-->
-<!--        </div>-->
-<!--      </el-col>-->
+            <el-col :span="16">
+              <div>
+                <el-input style="width: 40%;" v-model="traceId" placeholder="请输入溯源编号"></el-input>
+                &nbsp;&nbsp;&nbsp;
+                <el-button type="success" @click="query">查询</el-button>
+              </div>
+              <br />
+              <div>
+                <el-row>
+                  <el-col :span="6">
+                    <el-form>
+                      <el-form-item><span style="color: #13CE66;">制造服务信息</span></el-form-item>
+                      <el-form-item label="生产厂商:">{{ productData.factory }}</el-form-item>
+                      <el-form-item label="负责人员:">{{ productData.leader }}</el-form-item>
+                      <el-form-item label="质检信息:">{{ productData.cooking_recommend }}</el-form-item>
+                      <el-form-item label="保养方式:">{{ productData.keep_mathod }}</el-form-item>
+                      <el-form-item label="加工原料:">{{ productData.mixed_ingredients }}</el-form-item>
+                      <el-form-item label="生产车间:">{{ productData.workshop }}</el-form-item>
+                      <el-form-item label="电话号码:">{{ productData.leader_tel }}</el-form-item>
+                      <el-form-item label="产品名称:">{{ productData.product_name }}</el-form-item>
+                      <el-form-item label="需求ID:">{{ retailerInfo.crops_id }}</el-form-item>
+                      <el-form-item label="生产工时:">{{ productData.work_hours }}</el-form-item>
+                      <el-form-item label="生产标准:">{{ productData.Net_Content }}</el-form-item>
+                      <el-form-item label="备注信息:">{{ productData.remarks }}</el-form-item>
+
+                    </el-form>
+                  </el-col>
+                  <el-col :span="6">
+                    <el-form>
+                      <el-form-item><span style="color: #13CE66;">零售商信息</span></el-form-item>
+                      <el-form-item label="需求ID:">{{ retailerInfo.crops_id }}</el-form-item>
+<!--                      <el-form-item label="产品名称:">{{ productData.product_name }}</el-form-item>-->
+                      <el-form-item label="销售点:">{{ retailerInfo.retailer }}</el-form-item>
+                      <el-form-item label="产品ID:">{{ retailerInfo.product_id }}</el-form-item>
+                      <el-form-item label="电话号码:">{{ retailerInfo.retailer_tel }}</el-form-item>
+                      <el-form-item label="销售户ID:">{{ retailerInfo.retailer_id }}</el-form-item>
+                      <el-form-item label="销售户名称:">{{ retailerInfo.retailer_name }}</el-form-item>
+<!--                      <el-form-item label="制造服务方:">{{ productData.factory }}</el-form-item>-->
+<!--                      <el-form-item label=":">{{ cropsDetails.address }}</el-form-item>-->
+<!--                      <el-form-item label="生产周期:">{{ cropsDetails.apply_fertilizer_cycle }}</el-form-item>-->
+                      <el-form-item label="备注信息:">{{ retailerInfo.remarks }}</el-form-item>
+<!--                      <el-form-item label="zh:">{{ cropsDetails.grow_seedlings_cycle }}</el-form-item>-->
+                    </el-form>
+                  </el-col>
+                   <el-col :span="12">
+                    <el-tabs v-model="activeName" @tab-click="handleClick">
+                      <el-tab-pane label="需求记录" name="1">
+                        <el-row :gutter="8">
+                          <el-col :span="24" v-for="(info, index) in cropsProcessDetailsArray" :key="index" style="padding-top: 10px;">
+                            <el-card style="border-color: #42b983;">
+                              <el-col :span="24">
+                                <el-row>
+                                  <el-col :span="24">库存数量：{{ info.grow_status }}</el-col>
+                                </el-row>
+                                <br />
+                                <el-row>
+                                  <el-col :span="24">付款方式：{{ info.water_content }}</el-col>
+                                </el-row>
+                                <br />
+                                <el-row>
+                                  <el-col :span="24">急订单量：{{ info.temperature }}</el-col>
+                                </el-row>
+                                <br />
+                                <el-row>
+                                  <el-col :span="24">订单数量：{{ info.illumination_status }}</el-col>
+                                </el-row>
+                                <br />
+                                <el-row>
+                                  <el-col :span="24">记录时间：{{ info.record_time }}</el-col>
+                                </el-row>
+                                <br />
+                                <el-row>
+                                  <el-col :span="24">备注信息：{{ info.remarks }}</el-col>
+                                </el-row>
+                              </el-col>
+<!--                              <el-col :span="12"><img style="width: 100%;height: 11.05rem;" :src="info.crops_grow_photo_url" /></el-col>-->
+                            </el-card>
+                          </el-col>
+                          <br />
+                        </el-row>
+                      </el-tab-pane>
+<!--                      <el-tab-pane label="运输过程" name="2">-->
+<!--                        <div class="block">-->
+<!--                          <el-timeline v-for="(detail,index) in cropsDriverArray">-->
+<!--                            <el-timeline-item :timestamp="detail.transport_to_chain_time" placement="top" >-->
+<!--                              <el-card>-->
+<!--                                <h4 style="color: red;">经过地:{{detail.transport_to_address}}</h4>-->
+<!--                                <p>物流ID:{{detail.transport_id}}</p>-->
+<!--                                <p>司机:{{detail.driver_name}}</p>-->
+<!--                                <p>电话:{{detail.driver_tel}}</p>-->
+<!--                                <p>备注:{{detail.remarks}}</p>-->
+<!--                              </el-card>-->
+<!--                            </el-timeline-item>-->
+<!--                          </el-timeline>-->
+<!--                        </div>-->
+<!--                      </el-tab-pane>-->
+                      <el-tab-pane label="厂商质检" name="3">
+                        <el-card style="border-color: #42b983;">
+                          <el-col :span="18">
+                            <el-row>
+                              <el-col :span="24">负责人：{{ machingInfo.leader }}</el-col>
+                            </el-row>
+                            <br /><br />
+                            <el-row>
+                              <el-col :span="24">电话号码：{{ machingInfo.leader_tel }}</el-col>
+                            </el-row>
+                            <br /><br />
+                            <el-row>
+                              <el-col :span="24">原料厂商：{{ machingInfo.factory_name }}</el-col>
+                            </el-row>
+                            <br /><br />
+                            <el-row>
+                              <el-col :span="24">入厂时间：{{ machingInfo.in_factory_time }}</el-col>
+                            </el-row>
+                            <br /><br />
+                            <el-row>
+                              <el-col :span="24">出厂时间：{{ machingInfo.out_factory_time }}</el-col>
+                            </el-row>
+                            <br /><br />
+                            <el-row>
+                              <el-col :span="24">需求Id：{{ retailerInfo.crops_id }}</el-col>
+                            </el-row>
+                            <br /><br />
+                            <el-row>
+                              <el-col :span="24">质检信息：{{ productData.cooking_recommend }}</el-col>
+                            </el-row>
+                            <br /><br />
+                            <el-row>
+                              <el-col :span="24">备注信息：{{ machingInfo.remarks }}</el-col>
+                            </el-row>
+                            <br />
+                          </el-col>
+<!--                          <el-col :span="12"><img style="width: 100%;height: 21.05rem;" :src="machingInfo.testing_photo_url" /></el-col>-->
+                        </el-card>
+                      </el-tab-pane>
+                      <el-tab-pane label="工作记录" name="4">
+                        <el-row :gutter="8" >
+                          <el-col :span="24" v-for="(info,index) in operationArray" :key="index" style="padding-top: 10px;">
+                            <el-card style="border-color: #42b983;">
+                              <el-row>
+                                <el-col :span="24">需求Id：{{ retailerInfo.crops_id }}</el-col>
+                              </el-row>
+                              <br />
+                              <el-row>
+                                <el-col :span="24">操作人：{{ info.operation_people_name }}</el-col>
+                              </el-row>
+                              <br>
+                              <el-row>
+                                <el-col :span="24">操作人电话：{{ info.operation_people_tel }}</el-col>
+                              </el-row>
+                              <br>
+                              <el-row>
+                                <el-col :span="24">操作ID：{{ info.operation_id }}</el-col>
+                              </el-row>
+                              <br>
+                              <el-row>
+                                <el-col :span="24">操作时间：{{ info.time }}</el-col>
+                              </el-row>
+                              <br>
+                              <el-row>
+                                <el-col :span="24">操作内容：{{ info.remarks }}</el-col>
+                              </el-row>
+                            </el-card>
+                          </el-col>
+                          <br>
+                        </el-row>
+                      </el-tab-pane>
+                      <el-tab-pane label="需求服务信息" name="5">
+                        <el-card style="border-color: #42b983;">
+                          <el-row><el-col :span="24">需求名称：{{ cropsDetails.crops_name }}</el-col></el-row><br><br>
+                          <el-row><el-col :span="24">需求服务方：{{ cropsDetails.farmer_name }}</el-col></el-row><br><br>
+                          <el-row><el-col :span="24">电话号码：{{ cropsDetails.farmer_tel }}</el-col></el-row><br><br>
+                          <el-row><el-col :span="24">地址信息：{{ cropsDetails.address }}</el-col></el-row><br><br>
+                          <el-row><el-col :span="24">加工方式：{{ cropsDetails.plant_mode }}</el-col></el-row><br><br>
+                          <el-row><el-col :span="24">申请年度：{{ cropsDetails.year }}</el-col></el-row><br><br>
+                          <el-row><el-col :span="24">装配方式：{{ cropsDetails.bagging_status }}</el-col></el-row><br><br>
+                          <el-row><el-col :span="24">公司名称：{{ cropsDetails.fertilizer_name }}</el-col></el-row><br><br>
+                          <el-row><el-col :span="24">准备周期：{{ cropsDetails.grow_seedlings_cycle }}</el-col></el-row><br><br>
+                          <el-row><el-col :span="24">运输周期：{{ cropsDetails.irrigation_cycle }}</el-col></el-row><br><br>
+                          <el-row><el-col :span="24">修复周期：{{ cropsDetails.weed_cycle }}</el-col></el-row><br><br>
+                          <el-row><el-col :span="24">生产周期：{{ cropsDetails.apply_fertilizer_cycle }}</el-col></el-row><br><br>
+                          <el-row><el-col :span="24">注册时间：{{ cropsDetails.register_time }}</el-col></el-row><br><br>
+                          <el-row><el-col :span="24">备注信息：{{ cropsDetails.remarks }}</el-col></el-row><br>
+                        </el-card>
+                      </el-tab-pane>
+                    </el-tabs>
+                   </el-col>
+                </el-row>
+              </div>
+            </el-col>
     </el-row>
     <BlockInfo ref="getBlockInfoRef"></BlockInfo>
   </div>
@@ -263,6 +308,7 @@ export default {
       blockInfo: '',
       previousBlockInfo: '',
       previousBlockInfo2: '',
+      previousBlockInfo3: '',
       open: false,
       blockInfoHash: '',
       option: {
@@ -321,6 +367,17 @@ export default {
           .get(this.$httpUrl + '/blockexplorerapi/queryBlockInfo?number=' + previous2)
           .then(res => {
             this.previousBlockInfo2 = res;
+          })
+          .catch(err => {
+            console.log('err ' + err);
+          });
+
+        //前3个区块
+        var previous3 = Number(this.channelBlockInfo.data.height.low - 4);
+        this.$httpBlock
+          .get(this.$httpUrl + '/blockexplorerapi/queryBlockInfo?number=' + previous3)
+          .then(res => {
+            this.previousBlockInfo3 = res;
           })
           .catch(err => {
             console.log('err ' + err);

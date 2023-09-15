@@ -1,7 +1,7 @@
 <template>
 	<div class="app-container">
 
-		<el-divider>待处理业务</el-divider>
+		<el-divider>处理业务</el-divider>
 
 		<br />
 		<el-table :data="transportList">

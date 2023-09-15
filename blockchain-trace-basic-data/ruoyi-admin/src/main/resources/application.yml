@@ -5,7 +5,7 @@ ruoyi:
   # 版本
   version: 3.1.0
   # 版权年份
-  copyrightYear: 2019
+  copyrightYear: 2023
   # 实例演示开关
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
@@ -36,8 +36,8 @@ fdfs:
   thumb-image:
     width: 60
     height: 60
-  tracker-list: 192.168.1.130:22122
-  address: 192.168.1.130
+  tracker-list: 47.108.229.111:22122
+  address: http://47.108.229.111
 
 # 日志配置
 logging:
@@ -68,7 +68,7 @@ spring:
   # redis 配置
   redis:
     # 地址
-    host: 192.168.1.130
+    host: 47.108.229.111
     # 端口，默认为6379
     port: 6379
     # 密码

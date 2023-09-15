@@ -58,10 +58,10 @@ export const constantRoutes = [
     redirect: 'index',
     children: [
       {
-        path: 'index',
-        component: (resolve) => require(['@/views/index'], resolve),
-        name: '首页',
-        meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true }
+        path: '/index',
+        component: (resolve) => require(['@/views/blockExplorer/index'], resolve),
+        name: '区块链浏览器',
+        meta: { title: '区块链浏览器', icon: 'dashboard', noCache: true, affix: true }
       }
     ]
   },

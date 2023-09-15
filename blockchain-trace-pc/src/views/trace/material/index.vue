@@ -1,25 +1,25 @@
 <template>
 	<div class="app-container">
-		<el-divider>资源池</el-divider>
+		<el-divider>资源池数据</el-divider>
 
 		<br />
 		<el-table :data="transportList">
 			<el-table-column type="selection" width="55" align="center" />
 			<el-table-column label="需求ID" prop="cropsId" />
-<!--			<el-table-column label="农户" prop="farmerNickName" />-->
-<!--			<el-table-column label="原料来源" prop="farmerDept" />-->
+			<el-table-column label="负责人员" prop="farmerNickName" />
+			<el-table-column label="需求服务来源" prop="farmerDept" />
 			<el-table-column label="时间" prop="time" />
 			<el-table-column label="状态" prop="outFactoryStatus">
 				<template slot-scope="scope">
-					<el-tag v-show="scope.row.outFactoryStatus === 0">未匹配供应商</el-tag>
-					<el-tag v-show="scope.row.outFactoryStatus === 1">已匹配供应商</el-tag>
+					<el-tag v-show="scope.row.outFactoryStatus === 0">未匹配</el-tag>
+					<el-tag v-show="scope.row.outFactoryStatus === 1">已匹配</el-tag>
 				</template>
 			</el-table-column>
 			<el-table-column label="操作" align="center" class-name="small-padding fixed-width">
 				<template slot-scope="scope">
-          <el-button v-show="scope.row.outFactoryStatus === 0" size="mini" type="text" @click="noticeTransport(scope.row)">匹配供应商(1)</el-button>
-          <el-button v-show="scope.row.outFactoryStatus === 0" size="mini" type="text" @click="outFactory(scope.row)">链上登记(2)</el-button>
-<!--          <el-button v-show="scope.row.outFactoryStatus === 0" size="mini" type="text" @click="outFactory(scope.row)">出库(2)</el-button>-->
+          <el-button v-show="scope.row.outFactoryStatus === 0" size="mini" type="text" @click="noticeTransport(scope.row)">匹配供应商</el-button>
+<!--          <el-button v-show="scope.row.outFactoryStatus === 0" size="mini" type="text" @click="outFactory(scope.row)">链上登记(2)</el-button>-->
+          <el-button v-show="scope.row.outFactoryStatus === 0" size="mini" type="text" @click="outFactory(scope.row)">链上登记</el-button>
         </template>
 			</el-table-column>
 		</el-table>
@@ -32,8 +32,8 @@
 						<el-form-item label="匹配结果" prop="nickName"><el-input v-model="form.testingResult" placeholder="请输入匹配结果" /></el-form-item>
 					</el-col>
 				</el-row>
-				<el-form-item label="备注"><el-input v-model="form.remarks" type="textarea" placeholder="请输入内容"></el-input></el-form-item>
-<!--				<el-row>-->
+				<el-form-item label="备注信息"><el-input v-model="form.remarks" type="textarea" placeholder="请输入内容"></el-input></el-form-item>
+				<el-row>
 <!--					<el-col :span="12">-->
 <!--						<el-form-item label="检测图片:">-->
 <!--							<el-upload class="avatar-uploader" :on-change="getFile" :show-file-list="false" :auto-upload="false">-->
@@ -42,7 +42,7 @@
 <!--							</el-upload>-->
 <!--						</el-form-item>-->
 <!--					</el-col>-->
-<!--				</el-row>-->
+				</el-row>
 
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -64,14 +64,14 @@
 				</el-row>
 				<el-row>
 					<el-col :span="24">
-						<el-form-item label="供应商" prop="nickName">
+						<el-form-item label="供应厂商" prop="nickName">
 							<el-select v-model="trasportForm.deptId" placeholder="请选择">
 								<el-option v-for="dept in factoryList" :key="dept.deptId" :label="dept.deptName" :value="dept.deptId"></el-option>
 							</el-select>
 						</el-form-item>
 					</el-col>
 				</el-row>
-				<el-form-item label="备注"><el-input v-model="trasportForm.remarks" type="textarea" placeholder="请输入内容"></el-input></el-form-item>
+				<el-form-item label="备注信息"><el-input v-model="trasportForm.remarks" type="textarea" placeholder="请输入内容"></el-input></el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
 				<el-button type="primary" @click="addNoticeTrasport">确 定</el-button>

@@ -40,7 +40,7 @@ func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
 func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
 	function, args := APIstub.GetFunctionAndParameters()
 	// Route to the appropriate handler function to interact with the ledger appropriately
-	//根据作物id查询作物物流过程
+	//根据作物id查询产品物流过程
 	if function == "queryTransportByCropsId" {
 		return s.queryTransportByCropsId(APIstub, args)
 	} else if function == "initLedger" {
@@ -115,14 +115,14 @@ func (s *SmartContract) queryTransportByCropsId(APIstub shim.ChaincodeStubInterf
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	transport := []Transport{
 		Transport{TransportId: "the first transportId",
-			DriverId:             "2319492349",
-			DriverName:           "steakliu",
+			DriverId:             "7451849949497",
+			DriverName:           "SD1",
 			DriverTel:            "13657746155",
-			DriverDept:           "steakliu集团有限公司",
-			CropsId:              "123456",
-			TransportToChainTime: "2020.10.1",
-			TransportToAddress:   "中华人民共和国",
-			Remarks:              "物流初始块"},
+			DriverDept:           "上海汽车有限公司",
+			CropsId:              "7145848479444",
+			TransportToChainTime: "2023.4.12",
+			TransportToAddress:   "上海市嘉定区安亭镇",
+			Remarks:              "区块链项目"},
 	}
 	i := 0
 	for i < len(transport) {

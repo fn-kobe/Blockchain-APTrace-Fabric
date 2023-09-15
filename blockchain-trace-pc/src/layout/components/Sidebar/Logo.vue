@@ -6,7 +6,7 @@
         <h1 v-else class="sidebar-title">{{ title }} </h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
+<!--        <img v-if="logo" :src="logo" class="sidebar-logo">-->
         <h1 class="sidebar-title">{{ title }} </h1>
       </router-link>
     </transition>
@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      title: '基于区块链资源协调平台',
+      title: '基于区块链的多链业务协同构件——资源协调V2.0',
       logo: logoImg
     }
   }
@@ -45,23 +45,23 @@ export default {
 
 .sidebar-logo-container {
   position: relative;
-  width: 100%;
+  width: 800px;
   height: 50px;
   line-height: 50px;
   background: #2b2f3a;
-  text-align: center;
+  text-align: left;
   overflow: hidden;
 
   & .sidebar-logo-link {
     height: 100%;
     width: 100%;
 
-    & .sidebar-logo {
-      width: 32px;
-      height: 32px;
-      vertical-align: middle;
-      margin-right: 12px;
-    }
+    //& .sidebar-logo {
+    //  width: 2px;
+    //  height: 32px;
+    //  vertical-align: middle;
+    //  margin-right: 12px;
+    //}
 
     & .sidebar-title {
       display: inline-block;
@@ -70,6 +70,7 @@ export default {
       font-weight: 600;
       line-height: 50px;
       font-size: 14px;
+      width: 300px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
     }
